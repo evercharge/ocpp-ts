@@ -1,15 +1,15 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "RemoteStartTransactionRequest",
-    "type": "object",
-    "properties": {
-        "connectorId": {
-            "type": "integer"
-        },
-        "idTag": {
-            "type": "string",
-            "maxLength": 20
-        },
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "RemoteStartTransactionRequest",
+	"type": "object",
+	"properties": {
+		"connectorId": {
+			"type": "integer"
+		},
+		"idTag": {
+			"type": "string",
+			"maxLength": 255
+		},
 		"chargingProfile": {
 			"type": "object",
 			"properties": {
@@ -80,7 +80,7 @@
 									},
 									"limit": {
 										"type": "number",
-										"multipleOf" : 0.1
+										"multipleOf": 0.1
 									},
 									"numberPhases": {
 										"type": "integer"
@@ -94,7 +94,7 @@
 						},
 						"minChargingRate": {
 							"type": "number",
-							"multipleOf" : 0.1
+							"multipleOf": 0.1
 						}
 					},
 					"required": [
@@ -112,8 +112,8 @@
 			]
 		}
 	},
-    "additionalProperties": false,
-    "required": [
-        "idTag"
-    ]
+	"additionalProperties": false,
+	"required": [
+		"idTag"
+	]
 }
