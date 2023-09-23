@@ -1,9 +1,12 @@
 {
-  "name": "ocpp-ts",
+  "name": "@evercharge/ocpp-ts",
   "version": "0.3.1",
   "description": "OCPP 1.6: Open Charge Point Protocol",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "publishConfig": {
+    "@evercharge:registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "compileSchema": "npx ts-node scripts/compileSchemas.ts",
     "prepublish": "npm run build",
