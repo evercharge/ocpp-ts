@@ -12,11 +12,11 @@
         },
         "idTag": {
             "type": "string",
-            "maxLength": 20
+            "maxLength": 255
         },
         "parentIdTag": {
             "type": "string",
-            "maxLength": 20
+            "maxLength": 255
         },
         "reservationId": {
             "type": "integer"

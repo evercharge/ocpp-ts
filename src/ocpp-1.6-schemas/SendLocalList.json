@@ -13,7 +13,7 @@
                 "properties": {
                     "idTag": {
                         "type": "string",
-                        "maxLength": 20
+                        "maxLength": 255
                     },
                     "idTagInfo": {
                         "type": "object",
@@ -24,7 +24,7 @@
                             },
                             "parentIdTag": {
                                 "type": "string",
-                                "maxLength": 20
+                                "maxLength": 255
                             },
                             "status": {
                                 "type": "string",
@@ -47,7 +47,7 @@
                 ]
             }
         },
-		"updateType": {
+        "updateType": {
             "type": "string",
             "enum": [
                 "Differential",

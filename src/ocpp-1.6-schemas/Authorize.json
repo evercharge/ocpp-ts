@@ -5,7 +5,7 @@
     "properties": {
         "idTag": {
             "type": "string",
-            "maxLength": 20
+            "maxLength": 255
         }
     },
     "additionalProperties": false,

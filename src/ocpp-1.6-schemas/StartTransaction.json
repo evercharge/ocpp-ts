@@ -8,7 +8,7 @@
         },
         "idTag": {
             "type": "string",
-            "maxLength": 20
+            "maxLength": 255
         },
         "meterStart": {
             "type": "integer"

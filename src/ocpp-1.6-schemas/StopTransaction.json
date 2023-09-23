@@ -1,22 +1,22 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "StopTransactionRequest",
-    "type": "object",
-    "properties": {
-        "idTag": {
-            "type": "string",
-            "maxLength": 20
-        },
-        "meterStop": {
-            "type": "integer"
-        },
-        "timestamp": {
-            "type": "string",
-            "format": "date-time"
-        },
-        "transactionId": {
-            "type": "integer"
-        },
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "StopTransactionRequest",
+	"type": "object",
+	"properties": {
+		"idTag": {
+			"type": "string",
+			"maxLength": 255
+		},
+		"meterStop": {
+			"type": "integer"
+		},
+		"timestamp": {
+			"type": "string",
+			"format": "date-time"
+		},
+		"transactionId": {
+			"type": "integer"
+		},
 		"reason": {
 			"type": "string",
 			"enum": [
@@ -62,7 +62,7 @@
 										"Trigger",
 										"Other"
 									]
-								},	
+								},
 								"format": {
 									"type": "string",
 									"enum": [
@@ -155,12 +155,12 @@
 					"sampledValue"
 				]
 			}
-        }
-    },
-    "additionalProperties": false,
-    "required": [
-        "transactionId",
-        "timestamp",
-        "meterStop"
-    ]
+		}
+	},
+	"additionalProperties": false,
+	"required": [
+		"transactionId",
+		"timestamp",
+		"meterStop"
+	]
 }
