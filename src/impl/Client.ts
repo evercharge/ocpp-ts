@@ -9,6 +9,26 @@ export class Client extends EventEmitter {
 
   private cpId: string;
 
+  private webSocket: WebSocket | undefined;
+
+  public close() {
+    this.webSocket?.close();
+    this.connection?.socket.removeAllListeners();
+    this.connection?.socket.close();
+    this.removeAllListeners();
+  }
+
+  public sendCustomMessage(message: Uint8Array) {
+    this.webSocket?.send(message);
+  }
+
+  public terminate() {
+    this.webSocket?.terminate();
+    this.connection?.socket.removeAllListeners();
+    this.connection?.socket.terminate();
+    this.removeAllListeners();
+  }
+
   constructor(cpId: string) {
     super();
     this.cpId = cpId;
@@ -57,5 +77,7 @@ export class Client extends EventEmitter {
     ws.on('error', (err) => {
       this.emit('error', err);
     });
+
+    this.webSocket = ws;
   }
 }
