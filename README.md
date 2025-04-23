@@ -5,8 +5,18 @@ Typescript package implementing the JSON version of the Open Charge Point Protoc
 Open Charge Point Protocol (OCPP, <http://www.openchargealliance.org/>) is a communication protocol between multiple charging stations ("charge points") and a single management software ("central system").
 
 ## Installation
+
+```shell
+npm i @evercharge/ocpp-ts
 ```
-npm i ocpp-ts
+
+## Development
+
+To test this library locally, like during development, run `npm link` at the root of this project. Then, run `npm link @evercharge/ocpp-ts` in the directory of the project you want to test.
+
+```shell
+npm link
+npm link @evercharge/ocpp-ts
 ```
 
 ## Usage
@@ -16,7 +26,7 @@ npm i ocpp-ts
 ```ts
 import {
   OcppServer, OcppClientConnection, BootNotificationRequest, BootNotificationResponse,
-} from 'ocpp-ts';
+} from '@evercharge/ocpp-ts';
 
 const centralSystemSimple = new OcppServer();
 centralSystemSimple.listen(9220);
@@ -44,7 +54,7 @@ import {
   BootNotificationRequest,
   BootNotificationResponse,
   OcppClient, OcppError,
-} from 'ocpp-ts';
+} from '@evercharge/ocpp-ts';
 
 const chargingPointSimple = new OcppClient('CP1111');
 chargingPointSimple.on('error', (err: Error) => {
