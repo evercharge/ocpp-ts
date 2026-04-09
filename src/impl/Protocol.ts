@@ -129,7 +129,7 @@ export class Protocol {
           // timeout error
           reject(new OcppError(ERROR_INTERNALERROR, 'No response from the handler'));
         }, 10000);
-
+        payload['messageId'] = messageId;
         const hasListener = this.eventEmitter.emit(request, payload, (result: any) => {
           resolve(result);
         });
