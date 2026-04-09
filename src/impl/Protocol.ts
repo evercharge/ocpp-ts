@@ -14,7 +14,13 @@ const CALLRESULT_MESSAGE = 3; // Server-to-Client
 const CALLERROR_MESSAGE = 4; // Server-to-Client
 
 export class Protocol {
-  pendingCalls: any = {};
+  pendingCalls: {
+    [messageId: string]: {
+      resolve: (value: any) => void;
+      reject: (reason?: any) => void;
+      timer: NodeJS.Timeout;
+    };
+  } = {};
 
   eventEmitter: EventEmitter;
 
@@ -63,15 +69,15 @@ export class Protocol {
           request,
           payload]);
         this.socket.send(result);
-        this.pendingCalls[messageId] = {
-          resolve,
-          reject,
-        };
-
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           // timeout error
           this.onCallError(messageId, ERROR_INTERNALERROR, 'No response from the client', {});
         }, 10000);
+        this.pendingCalls[messageId] = {
+          resolve,
+          reject,
+          timer,
+        };
       } catch (e) {
         console.error(e);
         reject(e);
@@ -99,7 +105,8 @@ export class Protocol {
     errorDetails: any,
   ) {
     if (this.pendingCalls[messageId]) {
-      const { reject } = this.pendingCalls[messageId];
+      const { reject, timer } = this.pendingCalls[messageId];
+      clearTimeout(timer);
       if (reject) {
         reject(new OcppError(errorCode, errorDescription, errorDetails));
       }
@@ -109,7 +116,8 @@ export class Protocol {
 
   private onCallResult(messageId: string, payload: any) {
     if (this.pendingCalls[messageId]) {
-      const { resolve } = this.pendingCalls[messageId];
+      const { resolve, timer } = this.pendingCalls[messageId];
+      clearTimeout(timer);
       if (resolve) {
         resolve(payload);
       }

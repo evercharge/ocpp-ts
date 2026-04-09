@@ -52,3 +52,58 @@ describe('Protocol.onCall messageId injection', () => {
     (protocol as any).onCall(wireMessageId, 'Heartbeat', {});
   });
 });
+
+describe('Protocol.callRequest timer cleanup', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('clears the timeout when the response arrives', async () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket);
+
+    const promise = protocol.callRequest('Heartbeat', {});
+    expect(jest.getTimerCount()).toBe(1);
+
+    const sentFrame = JSON.parse(fakeSocket.send.mock.calls[0][0]);
+    const messageId = sentFrame[1];
+
+    // Simulate receiving a response from the client
+    (protocol as any).onCallResult(messageId, {currentTime: '2026-01-01T00:00:00Z'});
+
+    await promise;
+
+    expect(jest.getTimerCount()).toBe(0);
+  });
+
+  it('clears the timeout when an error response arrives', async () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket);
+
+    const promise = protocol.callRequest('Heartbeat', {}).catch(() => {
+      // swallow the expected error for test purposes
+    });
+    expect(jest.getTimerCount()).toBe(1);
+
+    const sentFrame = JSON.parse(fakeSocket.send.mock.calls[0][0]);
+    const messageId = sentFrame[1];
+
+    (protocol as any).onCallError(messageId, 'GenericError', 'test error', {});
+
+    await promise;
+
+    expect(jest.getTimerCount()).toBe(0);
+  });
+});
