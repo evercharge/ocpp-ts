@@ -84,26 +84,26 @@ export class OcppClientConnection extends Client {
     return super.on(event, listener);
   }
 
-  callRequest(request: 'CancelReservation', payload: CancelReservationRequest): Promise<CancelReservationResponse>
-  callRequest(request: 'ChangeAvailability', payload: ChangeAvailabilityRequest): Promise<ChangeAvailabilityResponse>
-  callRequest(request: 'ChangeConfiguration', payload: ChangeConfigurationRequest): Promise<ChangeConfigurationResponse>
-  callRequest(request: 'ClearCache', payload: ClearCacheRequest): Promise<ClearCacheResponse>
-  callRequest(request: 'ClearChargingProfile', payload: ClearChargingProfileRequest): Promise<ClearChargingProfileResponse>
-  callRequest(request: 'DataTransfer', payload: DataTransferRequest): Promise<DataTransferResponse>
-  callRequest(request: 'GetCompositeSchedule', payload: GetCompositeScheduleRequest): Promise<GetCompositeScheduleResponse>
-  callRequest(request: 'GetConfiguration', payload: GetConfigurationRequest): Promise<GetConfigurationResponse>
-  callRequest(request: 'GetDiagnostics', payload: GetDiagnosticsRequest): Promise<GetDiagnosticsResponse>
-  callRequest(request: 'GetLocalListVersion', payload: GetLocalListVersionRequest): Promise<GetLocalListVersionResponse>
-  callRequest(request: 'RemoteStartTransaction', payload: RemoteStartTransactionRequest): Promise<RemoteStartTransactionResponse>
-  callRequest(request: 'RemoteStopTransaction', payload: RemoteStopTransactionRequest): Promise<RemoteStopTransactionResponse>
-  callRequest(request: 'ReserveNow', payload: ReserveNowRequest): Promise<ReserveNowResponse>
-  callRequest(request: 'Reset', payload: ResetRequest): Promise<ResetResponse>
-  callRequest(request: 'SendLocalList', payload: SendLocalListRequest): Promise<SendLocalListResponse>
-  callRequest(request: 'SetChargingProfile', payload: SetChargingProfileRequest): Promise<SetChargingProfileResponse>
-  callRequest(request: 'TriggerMessage', payload: TriggerMessageRequest): Promise<TriggerMessageResponse>
-  callRequest(request: 'UnlockConnector', payload: UnlockConnectorRequest): Promise<UnlockConnectorResponse>
-  callRequest(request: 'UpdateFirmware', payload: UpdateFirmwareRequest): Promise<UpdateFirmwareResponse>
-  callRequest(request: string, payload: any): Promise<any> {
-    return super.callRequest(request, payload);
+  callRequest(request: 'CancelReservation', payload: CancelReservationRequest, messageId?: string): Promise<CancelReservationResponse>;
+  callRequest(request: 'ChangeAvailability', payload: ChangeAvailabilityRequest, messageId?: string): Promise<ChangeAvailabilityResponse>;
+  callRequest(request: 'ChangeConfiguration', payload: ChangeConfigurationRequest, messageId?: string): Promise<ChangeConfigurationResponse>;
+  callRequest(request: 'ClearCache', payload: ClearCacheRequest, messageId?: string): Promise<ClearCacheResponse>;
+  callRequest(request: 'ClearChargingProfile', payload: ClearChargingProfileRequest, messageId?: string): Promise<ClearChargingProfileResponse>;
+  callRequest(request: 'DataTransfer', payload: DataTransferRequest, messageId?: string): Promise<DataTransferResponse>;
+  callRequest(request: 'GetCompositeSchedule', payload: GetCompositeScheduleRequest, messageId?: string): Promise<GetCompositeScheduleResponse>;
+  callRequest(request: 'GetConfiguration', payload: GetConfigurationRequest, messageId?: string): Promise<GetConfigurationResponse>;
+  callRequest(request: 'GetDiagnostics', payload: GetDiagnosticsRequest, messageId?: string): Promise<GetDiagnosticsResponse>;
+  callRequest(request: 'GetLocalListVersion', payload: GetLocalListVersionRequest, messageId?: string): Promise<GetLocalListVersionResponse>;
+  callRequest(request: 'RemoteStartTransaction', payload: RemoteStartTransactionRequest, messageId?: string): Promise<RemoteStartTransactionResponse>;
+  callRequest(request: 'RemoteStopTransaction', payload: RemoteStopTransactionRequest, messageId?: string): Promise<RemoteStopTransactionResponse>;
+  callRequest(request: 'ReserveNow', payload: ReserveNowRequest, messageId?: string): Promise<ReserveNowResponse>;
+  callRequest(request: 'Reset', payload: ResetRequest, messageId?: string): Promise<ResetResponse>;
+  callRequest(request: 'SendLocalList', payload: SendLocalListRequest, messageId?: string): Promise<SendLocalListResponse>;
+  callRequest(request: 'SetChargingProfile', payload: SetChargingProfileRequest, messageId?: string): Promise<SetChargingProfileResponse>;
+  callRequest(request: 'TriggerMessage', payload: TriggerMessageRequest, messageId?: string): Promise<TriggerMessageResponse>;
+  callRequest(request: 'UnlockConnector', payload: UnlockConnectorRequest, messageId?: string): Promise<UnlockConnectorResponse>;
+  callRequest(request: 'UpdateFirmware', payload: UpdateFirmwareRequest, messageId?: string): Promise<UpdateFirmwareResponse>;
+  callRequest(request: string, payload: any, messageId?: string): Promise<any> {
+    return super.callRequest(request, payload, messageId);
   }
 }

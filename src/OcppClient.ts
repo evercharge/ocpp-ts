@@ -94,17 +94,17 @@ export class OcppClient extends Client {
     return super.on(event, listener);
   }
 
-  callRequest(request: 'Authorize', payload: AuthorizeRequest): Promise<AuthorizeResponse>
-  callRequest(request: 'BootNotification', payload: BootNotificationRequest): Promise<BootNotificationResponse>
-  callRequest(request: 'DataTransfer', payload: DataTransferRequest): Promise<DataTransferResponse>
-  callRequest(request: 'DiagnosticsStatusNotification', payload: DiagnosticsStatusNotificationRequest): Promise<DiagnosticsStatusNotificationResponse>
-  callRequest(request: 'FirmwareStatusNotification', payload: FirmwareStatusNotificationRequest): Promise<FirmwareStatusNotificationResponse>
-  callRequest(request: 'Heartbeat', payload: HeartbeatRequest): Promise<HeartbeatResponse>
-  callRequest(request: 'MeterValues', payload: MeterValuesRequest): Promise<MeterValuesResponse>
-  callRequest(request: 'StartTransaction', payload: StartTransactionRequest): Promise<StartTransactionResponse>
-  callRequest(request: 'StatusNotification', payload: StatusNotificationRequest): Promise<StatusNotificationResponse>
-  callRequest(request: 'StopTransaction', payload: StopTransactionRequest): Promise<StopTransactionResponse>
-  callRequest(request: string, payload: any): Promise<any> {
-    return super.callRequest(request, payload);
+  callRequest(request: 'Authorize', payload: AuthorizeRequest, messageId?: string): Promise<AuthorizeResponse>
+  callRequest(request: 'BootNotification', payload: BootNotificationRequest, messageId?: string): Promise<BootNotificationResponse>
+  callRequest(request: 'DataTransfer', payload: DataTransferRequest, messageId?: string): Promise<DataTransferResponse>
+  callRequest(request: 'DiagnosticsStatusNotification', payload: DiagnosticsStatusNotificationRequest, messageId?: string): Promise<DiagnosticsStatusNotificationResponse>
+  callRequest(request: 'FirmwareStatusNotification', payload: FirmwareStatusNotificationRequest, messageId?: string): Promise<FirmwareStatusNotificationResponse>
+  callRequest(request: 'Heartbeat', payload: HeartbeatRequest, messageId?: string): Promise<HeartbeatResponse>
+  callRequest(request: 'MeterValues', payload: MeterValuesRequest, messageId?: string): Promise<MeterValuesResponse>
+  callRequest(request: 'StartTransaction', payload: StartTransactionRequest, messageId?: string): Promise<StartTransactionResponse>
+  callRequest(request: 'StatusNotification', payload: StatusNotificationRequest, messageId?: string): Promise<StatusNotificationResponse>
+  callRequest(request: 'StopTransaction', payload: StopTransactionRequest, messageId?: string): Promise<StopTransactionResponse>
+  callRequest(request: string, payload: any, messageId?: string): Promise<any> {
+    return super.callRequest(request, payload, messageId);
   }
 }

@@ -63,20 +63,20 @@ export class Protocol {
     }
   }
 
-  public callRequest(request: string, payload: any): Promise<any> {
+  public callRequest(request: string, payload: any, messageId?: string): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
-        const messageId = uuidv4();
+        const id = messageId ?? uuidv4();
         const result = JSON.stringify([CALL_MESSAGE,
-          messageId,
+          id,
           request,
           payload]);
         this.socket.send(result);
         const timer = setTimeout(() => {
           // timeout error
-          this.onCallError(messageId, ERROR_INTERNALERROR, 'No response from the client', {});
+          this.onCallError(id, ERROR_INTERNALERROR, 'No response from the client', {});
         }, this.callTimeoutMs);
-        this.pendingCalls[messageId] = {
+        this.pendingCalls[id] = {
           resolve,
           reject,
           timer,
