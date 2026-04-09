@@ -107,3 +107,57 @@ describe('Protocol.callRequest timer cleanup', () => {
     expect(jest.getTimerCount()).toBe(0);
   });
 });
+
+describe('Protocol.callRequest configurable timeout', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('rejects after the configured timeout when no response arrives', async () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket, 5000);
+
+    let rejected = false;
+    const promise = protocol.callRequest('Heartbeat', {}).catch((err) => {
+      rejected = true;
+    });
+
+    jest.advanceTimersByTime(4999);
+    await Promise.resolve();
+    expect(rejected).toBe(false);
+
+    jest.advanceTimersByTime(2);
+    await promise;
+    expect(rejected).toBe(true);
+  });
+
+  it('falls back to the 10000ms default when no timeout is configured', async () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket);
+
+    let rejected = false;
+    const promise = protocol.callRequest('Heartbeat', {}).catch((err) => {
+      rejected = true;
+    });
+
+    jest.advanceTimersByTime(9999);
+    await Promise.resolve();
+    expect(rejected).toBe(false);
+
+    jest.advanceTimersByTime(2);
+    await promise;
+    expect(rejected).toBe(true);
+  });
+});

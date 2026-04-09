@@ -26,9 +26,12 @@ export class Protocol {
 
   socket: WebSocket;
 
-  constructor(eventEmitter: EventEmitter, socket: WebSocket) {
+  private callTimeoutMs: number;
+
+  constructor(eventEmitter: EventEmitter, socket: WebSocket, callTimeoutMs: number = 10000) {
     this.eventEmitter = eventEmitter;
     this.socket = socket;
+    this.callTimeoutMs = callTimeoutMs;
     this.socket.on('message', (message) => {
       this.onMessage(message.toString());
     });
@@ -72,7 +75,7 @@ export class Protocol {
         const timer = setTimeout(() => {
           // timeout error
           this.onCallError(messageId, ERROR_INTERNALERROR, 'No response from the client', {});
-        }, 10000);
+        }, this.callTimeoutMs);
         this.pendingCalls[messageId] = {
           resolve,
           reject,
@@ -136,7 +139,7 @@ export class Protocol {
         setTimeout(() => {
           // timeout error
           reject(new OcppError(ERROR_INTERNALERROR, 'No response from the handler'));
-        }, 10000);
+        }, this.callTimeoutMs);
         payload['messageId'] = messageId;
         const hasListener = this.eventEmitter.emit(request, payload, (result: any) => {
           resolve(result);
