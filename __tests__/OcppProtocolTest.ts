@@ -161,3 +161,55 @@ describe('Protocol.callRequest configurable timeout', () => {
     expect(rejected).toBe(true);
   });
 });
+
+describe('Protocol.callRequest caller-supplied messageId', () => {
+  it('uses the supplied messageId verbatim on the wire when provided', () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket);
+    const suppliedId = 'test-message-id-12345';
+
+    protocol.callRequest('Heartbeat', {}, suppliedId).catch(() => {
+      // swallow the expected error for test purposes
+    });
+
+    expect(fakeSocket.send).toHaveBeenCalledTimes(1);
+    const sentFrame = JSON.parse(fakeSocket.send.mock.calls[0][0]);
+    expect(sentFrame[0]).toBe(2); // OCPP CALL message type
+    expect(sentFrame[1]).toBe(suppliedId);
+    expect(sentFrame[2]).toBe('Heartbeat');
+  });
+
+  it('generates a uuid when no messageId is supplied (backwards compatibility)', () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket);
+
+    protocol.callRequest('Heartbeat', {}).catch(() => {});
+
+    const sentFrame = JSON.parse(fakeSocket.send.mock.calls[0][0]);
+    expect(sentFrame[1]).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+  });
+
+  it('correlates the response using the supplied messageId', async () => {
+    const eventEmitter = new EventEmitter();
+    const fakeSocket: any = {
+      on: jest.fn(),
+      send: jest.fn(),
+    };
+    const protocol = new Protocol(eventEmitter, fakeSocket);
+    const suppliedId = 'correlation-test-id';
+
+    const promise = protocol.callRequest('Heartbeat', {}, suppliedId);
+
+    (protocol as any).onCallResult(suppliedId, { currentTime: '2026-01-01T00:00:00Z' });
+
+    await expect(promise).resolves.toEqual({ currentTime: '2026-01-01T00:00:00Z' });
+  });
+});
