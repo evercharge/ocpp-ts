@@ -17,6 +17,13 @@ export class Server extends EventEmitter {
 
   private clients: Array<Client> = [];
 
+  private callTimeoutMs: number;
+
+  constructor(callTimeoutMs: number = 10000) {
+    super();
+    this.callTimeoutMs = callTimeoutMs;
+  }
+
   public close() {
     this.removeAllListeners();
     this.server?.close((err) => {
@@ -92,7 +99,7 @@ export class Server extends EventEmitter {
     }
 
     const client = new OcppClientConnection(cpId);
-    client.setConnection(new Protocol(client, socket));
+    client.setConnection(new Protocol(client, socket, this.callTimeoutMs));
 
     socket.on('error', (err) => {
       console.info(err.message, socket.readyState);

@@ -9,6 +9,8 @@ export class Client extends EventEmitter {
 
   private cpId: string;
 
+  private callTimeoutMs: number;
+
   private webSocket: WebSocket | undefined;
 
   public close() {
@@ -29,9 +31,10 @@ export class Client extends EventEmitter {
     this.removeAllListeners();
   }
 
-  constructor(cpId: string) {
+  constructor(cpId: string, callTimeoutMs: number = 10000) {
     super();
     this.cpId = cpId;
+    this.callTimeoutMs = callTimeoutMs;
   }
 
   protected getCpId(): string {
@@ -69,7 +72,7 @@ export class Client extends EventEmitter {
 
     ws.on('open', () => {
       if (ws) {
-        this.setConnection(new Protocol(this, ws));
+        this.setConnection(new Protocol(this, ws, this.callTimeoutMs));
         this.emit('connect');
       }
     });
