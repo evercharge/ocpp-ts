@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "publishConfig": {
-    "@evercharge:registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "keywords": [
     "ocpp",
