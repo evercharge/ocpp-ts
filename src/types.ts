@@ -249,6 +249,7 @@ export interface MeterValuesRequest {
         | "A"
         | "V"
         | "K"
+        | "Celcius"
         | "Celsius"
         | "Fahrenheit"
         | "Percent";
