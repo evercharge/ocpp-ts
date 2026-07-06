@@ -250,6 +250,7 @@ export interface MeterValuesRequest {
         | "V"
         | "K"
         | "Celcius"
+        | "Celsius"
         | "Fahrenheit"
         | "Percent";
       [k: string]: unknown;
@@ -516,6 +517,7 @@ export interface StopTransactionRequest {
         | "V"
         | "K"
         | "Celcius"
+        | "Celsius"
         | "Fahrenheit"
         | "Percent";
       [k: string]: unknown;

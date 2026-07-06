@@ -114,7 +114,7 @@
 										"A",
 										"V",
 										"K",
-										"Celcius",
+										"Celsius",
 										"Fahrenheit",
 										"Percent"
 									]
@@ -129,7 +129,7 @@
                 "required": [
                     "timestamp",
 					"sampledValue"
-                ]		
+                ]
 			}
 		}
     },
