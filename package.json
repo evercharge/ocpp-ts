@@ -26,6 +26,13 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/evercharge/ocpp-ts/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evercharge/ocpp-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evercharge/ocpp-ts/issues"
+  },
   "dependencies": {
     "ajv": "^6.12.6",
     "directory-tree": "^3.0.1",
